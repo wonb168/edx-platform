@@ -20,6 +20,7 @@ clean: ## archive and delete most git-ignored files
 
 docs: ## build the developer documentation for this repository
 	rm -rf docs/_build docs/cms docs/common docs/lms docs/openedx
+	python manage.py lms generate_swagger -o docs/swagger.yaml
 	cd docs; make html
 
 extract_translations: ## extract localizable strings from sources
