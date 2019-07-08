@@ -70,7 +70,7 @@ class InstructorTask(models.Model):
     task_type = models.CharField(max_length=50, db_index=True)
     course_id = CourseKeyField(max_length=255, db_index=True)
     task_key = models.CharField(max_length=255, db_index=True)
-    task_input = models.CharField(max_length=255)
+    task_input = models.TextField()
     task_id = models.CharField(max_length=255, db_index=True)  # max_length from celery_taskmeta
     task_state = models.CharField(max_length=50, null=True, db_index=True)  # max_length from celery_taskmeta
     task_output = models.CharField(max_length=1024, null=True)
