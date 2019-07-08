@@ -99,9 +99,8 @@ class InstructorTask(models.Model):
         """
         # create the task_id here, and pass it into celery:
         task_id = str(uuid4())
-
         json_task_input = json.dumps(task_input)
-        
+
         # create the task, then save it:
         instructor_task = cls(
             course_id=course_id,
