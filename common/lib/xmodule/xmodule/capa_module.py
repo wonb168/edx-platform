@@ -144,17 +144,19 @@ class ProblemBlock(
         """
         # self.score is initialized in self.lcp but in this method is accessed before self.lcp so just call it first.
         self.lcp
-        handlers = {
-            'hint_button': self.hint_button,
-            'problem_get': self.get_problem,
-            'problem_check': self.submit_problem,
-            'problem_reset': self.reset_problem,
-            'problem_save': self.save_problem,
-            'problem_show': self.get_answer,
-            'score_update': self.update_score,
-            'input_ajax': self.handle_input_ajax,
-            'ungraded_response': self.handle_ungraded_response
-        }
+        handlers = {}
+        if self.scope_ids.user_id:
+            handlers.update({
+                'hint_button': self.hint_button,
+                'problem_get': self.get_problem,
+                'problem_check': self.submit_problem,
+                'problem_reset': self.reset_problem,
+                'problem_save': self.save_problem,
+                'problem_show': self.get_answer,
+                'score_update': self.update_score,
+                'input_ajax': self.handle_input_ajax,
+                'ungraded_response': self.handle_ungraded_response
+            })
 
         _ = self.runtime.service(self, "i18n").ugettext
 
