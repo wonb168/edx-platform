@@ -11,32 +11,36 @@ sessions. Assumes structure:
 
 # We intentionally define lots of variables that aren't used, and
 # want to import all variables from base settings files
-# pylint: disable=wildcard-import, unused-wildcard-import
+# pylint: disable=wildcard-import, unused-wildcard-import, wrong-import-order
 
-from django.utils.translation import ugettext_lazy
+from __future__ import absolute_import
 
 from .common import *
 import os
-from path import Path as path
 from uuid import uuid4
-from util.db import NoOpMigrationModules
+
+
+from django.utils.translation import ugettext_lazy
+from path import Path as path
+
 from openedx.core.lib.derived import derive_settings
+from util.db import NoOpMigrationModules
 
 # import settings from LMS for consistent behavior with CMS
 # pylint: disable=unused-import
 from lms.envs.test import (
-    WIKI_ENABLED,
-    PLATFORM_NAME,
-    PLATFORM_DESCRIPTION,
-    SITE_NAME,
-    DEFAULT_FILE_STORAGE,
-    MEDIA_ROOT,
-    MEDIA_URL,
     COMPREHENSIVE_THEME_DIRS,
+    DEFAULT_FILE_STORAGE,
+    ECOMMERCE_API_URL,
     ENABLE_COMPREHENSIVE_THEMING,
     JWT_AUTH,
+    MEDIA_ROOT,
+    MEDIA_URL,
+    PLATFORM_DESCRIPTION,
+    PLATFORM_NAME,
     REGISTRATION_EXTRA_FIELDS,
-    ECOMMERCE_API_URL,
+    SITE_NAME,
+    WIKI_ENABLED
 )
 
 
@@ -349,7 +353,7 @@ VIDEO_TRANSCRIPTS_SETTINGS = dict(
 
 ####################### Plugin Settings ##########################
 
-from openedx.core.djangoapps.plugins import plugin_settings, constants as plugin_constants
+from openedx.core.djangoapps.plugins import plugin_settings, constants as plugin_constants  # pylint: disable=wrong-import-order
 plugin_settings.add_plugins(__name__, plugin_constants.ProjectType.CMS, plugin_constants.SettingsType.TEST)
 
 ########################## Derive Any Derived Settings  #######################
