@@ -98,10 +98,12 @@ class BookmarksViewMixin(object):
 import textwrap
 from django.utils.decorators import method_decorator
 from drf_yasg.utils import swagger_auto_schema
+from openedx.core.openapi import openapi_doc
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    operation_summary="Get a paginated list of bookmarks for a user.",
-    operation_description=textwrap.dedent("""\
+    **openapi_doc(
+    summary="Get a paginated list of bookmarks for a user.",
+    description="""\
         The list can be filtered by passing parameter "course_id=<course_id>"
         to only include bookmarks from a particular course.
 
@@ -113,34 +115,34 @@ from drf_yasg.utils import swagger_auto_schema
         To include the optional fields pass the values in "fields" parameter
         as a comma separated list. Possible values are:
 
-          * "display_name"
-          * "path"
+        * "display_name"
+        * "path"
 
-        ```
-        {
-            "count": 7,
-            "previous": null,
-            "num_pages": 1,
-            "results": [
-                {
-                    "badge_class": {
-                        "slug": "special_award",
-                        "issuing_component": "openedx__course",
-                        "display_name": "Very Special Award",
-                        "course_id": "course-v1:edX+DemoX+Demo_Course",
-                        "description": "Awarded for people who did something incredibly special",
-                        "criteria": "Do something incredibly special.",
-                        "image": "http://example.com/media/badge_classes/badges/special_xdpqpBv_9FYOZwN.png"
+        Example::
+
+            {
+                "count": 7,
+                "previous": null,
+                "num_pages": 1,
+                "results": [
+                    {
+                        "badge_class": {
+                            "slug": "special_award",
+                            "issuing_component": "openedx__course",
+                            "display_name": "Very Special Award",
+                            "course_id": "course-v1:edX+DemoX+Demo_Course",
+                            "description": "Awarded for people who did something incredibly special",
+                            "criteria": "Do something incredibly special.",
+                            "image": "http://example.com/media/badge_classes/badges/special_xdpqpBv_9FYOZwN.png"
+                        },
+                        "image_url": "http://badges.example.com/media/issued/cd75b69fc1c979fcc1697c8403da2bdf.png",
+                        "assertion_url": "http://badges.example.com/public/assertions/07020647-e772-44dd-98b7-d13d34335ca6"
                     },
-                    "image_url": "http://badges.example.com/media/issued/cd75b69fc1c979fcc1697c8403da2bdf.png",
-                    "assertion_url": "http://badges.example.com/public/assertions/07020647-e772-44dd-98b7-d13d34335ca6"
-                },
-                ...
-            ]
-        }
-        ```
-        """),
-    ),
+                    ...
+                ]
+            }
+        """,
+    )),
 )
 class BookmarksListView(ListCreateAPIView, BookmarksViewMixin):
     """

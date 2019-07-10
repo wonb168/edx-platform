@@ -20,3 +20,21 @@ schema_view = get_schema_view(
     public=True,
     permission_classes=(permissions.AllowAny,),
 )
+
+
+import textwrap
+from docutils.core import publish_parts
+from rst_to_md.writer import Writer
+
+
+def rst_to_md(rst):
+    parts = publish_parts(source=rst, writer=Writer())
+    return parts["whole"]
+
+
+def openapi_doc(summary, description):
+    description = rst_to_md(textwrap.dedent(description))
+    return {
+        'operation_summary': summary,
+        'operation_description': description,
+    }
