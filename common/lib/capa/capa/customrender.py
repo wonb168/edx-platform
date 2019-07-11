@@ -6,6 +6,8 @@ These tags do not have state, so they just get passed the system (for access to 
 and the xml element.
 """
 
+from __future__ import absolute_import
+
 import logging
 import re
 import xml.sax.saxutils as saxutils
@@ -19,7 +21,8 @@ log = logging.getLogger(__name__)
 
 registry = TagRegistry()
 
-#-----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
 
 
 class MathRenderer(object):
@@ -74,7 +77,8 @@ class MathRenderer(object):
 
 registry.register(MathRenderer)
 
-#-----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
 
 
 class SolutionRenderer(object):
@@ -96,9 +100,11 @@ class SolutionRenderer(object):
         html = self.system.render_template("solutionspan.html", context)
         return etree.XML(html)
 
+
 registry.register(SolutionRenderer)
 
-#-----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
 
 
 class TargetedFeedbackRenderer(object):
@@ -135,9 +141,11 @@ class TargetedFeedbackRenderer(object):
                 raise
         return xhtml
 
+
 registry.register(TargetedFeedbackRenderer)
 
-#-----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
 
 
 class ClarificationRenderer(object):
@@ -166,5 +174,6 @@ class ClarificationRenderer(object):
         # We must include any text that was following our original <clarification>...</clarification> XML node.:
         xml.tail = self.tail
         return xml
+
 
 registry.register(ClarificationRenderer)
