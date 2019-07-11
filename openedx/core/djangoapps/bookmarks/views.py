@@ -272,7 +272,28 @@ class BookmarksListView(ListCreateAPIView, BookmarksViewMixin):
     @swagger_auto_schema(
         operation_summary="Create a new bookmark for a user.",
         operation_description=textwrap.dedent("""\
-            MAKE BOOKMARKS
+            This is markdown
+
+            ## A heading, what will happen?
+
+            More content.
+
+            * A point
+
+            * Another point.
+
+            ```python
+            Some code!
+            (hello)
+            ```
+
+            More text.
+
+            ```
+            Untyped code.
+            ```
+
+            Last sentence.
             """),
         )
     def post(self, request):
