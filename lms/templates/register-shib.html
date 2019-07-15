@@ -28,6 +28,7 @@ import calendar
       // new window/tab opening
       $('a[rel="external"], a[class="new-vp"]')
       .click( function() {
+        console.log('------> external rel')
       window.open( $(this).attr('href') );
       return false;
       });

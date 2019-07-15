@@ -259,6 +259,7 @@
 
                     // Clicking on links inside a label should open that link.
                     $('label a').click(function(ev) {
+                        console.log('-----> Here in register')
                         ev.stopPropagation();
                         ev.preventDefault();
                         window.open($(this).attr('href'), $(this).attr('target'));
