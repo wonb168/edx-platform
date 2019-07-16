@@ -410,7 +410,7 @@ def coverage_test_selection_data(options):
     """
     Set up the datafiles needed to run coverage-driven test selection (who-tests-what)
     """
-    sh('git diff $(git merge-base {} HEAD) > {}{}'.format(
+    sh('git diff $(git merge-base {} HEAD) > {}/{}'.format(
         getattr(options, 'compare_branch', 'origin/master'),
         COVERAGE_CACHE_BASEPATH,
         WHO_TESTS_WHAT_DIFF
