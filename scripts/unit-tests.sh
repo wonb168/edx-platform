@@ -28,7 +28,7 @@ set -e
 #   the specified file before tox gets a chance to redirect it to stdout.
 #
 ###############################################################################
-
+set -x
 export SKIP_NPM_INSTALL="True"
 
 # Skip re-installation of Python prerequisites inside a tox execution.
