@@ -87,4 +87,10 @@ BOKCHOY_OPTS = [
         dest="save_screenshots",
         help="deprecated in favor of save-screenshots"
     ),
+    make_option(
+        '--with-wtw',
+        dest='with_wtw',
+        default="origin/master",
+        help="Only run tests based on the lines changed relative to the specified branch"
+    )
 ]

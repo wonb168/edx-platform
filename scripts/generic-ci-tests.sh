@@ -175,20 +175,23 @@ case "$TEST_SUITE" in
     "bok-choy")
 
         PAVER_ARGS="-n $NUMBER_OF_BOKCHOY_THREADS"
+        if [[ -n "$WHO_TESTS_WHAT" ]]; then
+            WTW_ARGS='--wtw who-tests-what.diff --wtwdb who-tests-what.baseline'
+        fi
         export BOKCHOY_HEADLESS=true
 
         case "$SHARD" in
 
             "all")
-                $TOX paver test_bokchoy $PAVER_ARGS
+                $TOX paver test_bokchoy $PAVER_ARGS $WTW_ARGS
                 ;;
 
             [1-9]|1[0-9]|2[0-4])
-                $TOX paver test_bokchoy --eval-attr="shard==$SHARD and not a11y" $PAVER_ARGS
+                $TOX paver test_bokchoy --eval-attr="shard==$SHARD and not a11y" $PAVER_ARGS $WTW_ARGS
                 ;;
 
             25|"noshard")
-                $TOX paver test_bokchoy --eval-attr="(shard>=$SHARD or not shard) and not a11y" $PAVER_ARGS
+                $TOX paver test_bokchoy --eval-attr="(shard>=$SHARD or not shard) and not a11y" $PAVER_ARGS $WTW_ARGS
                 ;;
 
             # Default case because if we later define another bok-choy shard on Jenkins
