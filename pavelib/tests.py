@@ -13,7 +13,7 @@ from pavelib.utils.envs import Env
 from pavelib.utils.passthrough_opts import PassthroughTask
 from pavelib.utils.test import suites
 from pavelib.utils.timer import timed
-from pavelib.utils.db_utils import get_file_from_s3
+from pavelib.utils.test.utils import fetch_coverage_test_selection_data
 
 try:
     from pygments.console import colorize
@@ -21,12 +21,6 @@ except ImportError:
     colorize = lambda color, text: text
 
 __test__ = False  # do not collect
-
-
-COVERAGE_CACHE_BUCKET = "edx-tools-coverage-caches"
-COVERAGE_CACHE_BASEPATH = "test_root/who_tests_what"
-COVERAGE_CACHE_BASELINE = "who_tests_what.baseline"
-WHO_TESTS_WHAT_DIFF = "who_tests_what.diff"
 
 
 @needs(
@@ -102,8 +96,11 @@ WHO_TESTS_WHAT_DIFF = "who_tests_what.diff"
         help="Only run tests based on the lines changed relative to the specified branch"
     ),
     ("compare-branch=", "b", "Branch to compare against, defaults to origin/master"),
-], share_with=['pavelib.utils.test.utils.clean_reports_dir'])
-@might_call('coverage_test_selection_data')
+], share_with=[
+    'pavelib.utils.test.utils.clean_reports_dir',
+    'pavelib.utils.test.utils.fetch_coverage_test_selection_data',
+])
+@might_call('pavelib.utils.test.utils.fetch_coverage_test_selection_data')
 @PassthroughTask
 @timed
 def test_system(options, passthrough_options):
@@ -118,7 +115,7 @@ def test_system(options, passthrough_options):
     assert django_version in (None, '1.8', '1.9', '1.10', '1.11')
 
     if options.test_system.with_wtw:
-        coverage_test_selection_data()
+        fetch_coverage_test_selection_data()
 
     if test_id:
         # Testing a single test ID.
@@ -400,19 +397,3 @@ def diff_coverage(options):
         )
 
         print("\n")
-
-@task
-@cmdopts([
-    ("compare-branch=", "b", "Branch to compare against, defaults to origin/master"),
-], share_with=['coverage'])
-@timed
-def coverage_test_selection_data(options):
-    """
-    Set up the datafiles needed to run coverage-driven test selection (who-tests-what)
-    """
-    sh('git diff $(git merge-base {} HEAD) > {}/{}'.format(
-        getattr(options, 'compare_branch', 'origin/master'),
-        COVERAGE_CACHE_BASEPATH,
-        WHO_TESTS_WHAT_DIFF
-    ))
-    get_file_from_s3(COVERAGE_CACHE_BUCKET, COVERAGE_CACHE_BASELINE, COVERAGE_CACHE_BASEPATH)

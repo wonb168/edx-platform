@@ -90,7 +90,8 @@ BOKCHOY_OPTS = [
     make_option(
         '--with-wtw',
         dest='with_wtw',
-        default="origin/master",
+        action='store_true',
         help="Only run tests based on the lines changed relative to the specified branch"
-    )
+    ),
+    ("compare-branch=", "b", "Branch to compare against, defaults to origin/master"),
 ]

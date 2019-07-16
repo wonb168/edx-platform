@@ -176,7 +176,7 @@ case "$TEST_SUITE" in
 
         PAVER_ARGS="-n $NUMBER_OF_BOKCHOY_THREADS"
         if [[ -n "$WHO_TESTS_WHAT" ]]; then
-            WTW_ARGS='--wtw who-tests-what.diff --wtwdb who-tests-what.baseline'
+            PAVER_ARGS="$PAVER_ARGS --with-wtw"
         fi
         export BOKCHOY_HEADLESS=true
 
