@@ -183,8 +183,8 @@ IDA_LOGOUT_URI_LIST = [
 
 #####################################################################
 
-from openedx.core.djangoapps.plugins import constants as plugin_constants  # pylint: wrong-import-order, wrong-import-position
-from openedx.core.djangoapps.plugins import plugin_settings  # pylint: wrong-import-order, wrong-import-position
+# pylint: wrong-import-order, wrong-import-position
+from openedx.core.djangoapps.plugins import constants as plugin_constants, plugin_settings
 
 plugin_settings.add_plugins(__name__, plugin_constants.ProjectType.CMS, plugin_constants.SettingsType.DEVSTACK)
 

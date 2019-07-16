@@ -353,7 +353,8 @@ VIDEO_TRANSCRIPTS_SETTINGS = dict(
 
 ####################### Plugin Settings ##########################
 
-from openedx.core.djangoapps.plugins import plugin_settings, constants as plugin_constants  # pylint: disable=wrong-import-order
+# pylint: wrong-import-position
+from openedx.core.djangoapps.plugins import plugin_settings, constants as plugin_constants
 plugin_settings.add_plugins(__name__, plugin_constants.ProjectType.CMS, plugin_constants.SettingsType.TEST)
 
 ########################## Derive Any Derived Settings  #######################
