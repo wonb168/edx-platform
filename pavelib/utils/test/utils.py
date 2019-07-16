@@ -10,7 +10,7 @@ from paver.easy import cmdopts, sh, task
 
 from pavelib.utils.envs import Env
 from pavelib.utils.timer import timed
-from pavelib.utils.db_utils import get_file_from_s3
+from pavelib.utils.db_utils import get_file_from_s3, upload_to_s3
 
 try:
     from bok_choy.browser import browser
@@ -157,6 +157,7 @@ def check_firefox_version():
             )
         )
 
+
 @task
 @cmdopts([
     ("compare-branch=", "b", "Branch to compare against, defaults to origin/master"),
@@ -178,3 +179,12 @@ def fetch_coverage_test_selection_data(options):
         WHO_TESTS_WHAT_DIFF
     ))
     get_file_from_s3(COVERAGE_CACHE_BUCKET, COVERAGE_CACHE_BASELINE, COVERAGE_CACHE_BASEPATH)
+
+
+@task
+def upload_coverage_to_s3(options):
+    upload_to_s3(
+        COVERAGE_CACHE_BASELINE,
+        '{}/{}'.format(COVERAGE_CACHE_BASEPATH, 'reports/.coverage'),
+        COVERAGE_CACHE_BUCKET
+    )
