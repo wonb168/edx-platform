@@ -344,8 +344,7 @@ $(document).ready(function() {
                 mailto = "mailto:" + "${settings.FEEDBACK_SUBMISSION_EMAIL | n, js_escaped_string}" +
                     "?subject=" + $("#feedback_form input[name='subject']").val() +
                     "&body=" + $("#feedback_form textarea[name='details']").val();
-                '----'
-                    window.open(mailto);
+                window.open(mailto);
                 e.preventDefault();
             });
 %endif
